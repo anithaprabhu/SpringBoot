@@ -1,4 +1,4 @@
-package user;
+package hello.user;
 
 public class ChgPwdResult {
 

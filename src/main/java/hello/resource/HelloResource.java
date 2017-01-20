@@ -1,10 +1,10 @@
-package hello;
+package hello.resource;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-public class HelloController {
+public class HelloResource {
 
     @RequestMapping("/")
     public String index() {
