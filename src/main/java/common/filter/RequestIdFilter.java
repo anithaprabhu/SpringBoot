@@ -1,4 +1,4 @@
-package hello.filter;
+package common.filter;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.MDC;
 import org.slf4j.Logger;
@@ -35,8 +36,11 @@ public class RequestIdFilter implements Filter {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		HttpServletRequest req = (HttpServletRequest) sReq;
+		HttpServletResponse res = (HttpServletResponse) sRes;
 		String reqId = req.getHeader(REQUEST_ID);
+		boolean newRequestId = false;
 		if (StringUtils.isEmpty(reqId)) {
+			newRequestId = false;
 			reqId = UUID.randomUUID().toString();
 		}
 		MDC.put(REQUEST_ID, reqId);
@@ -45,6 +49,9 @@ public class RequestIdFilter implements Filter {
 			filterChain.doFilter(sReq, sRes);
 		}
 		finally {
+			if(newRequestId){
+				res.addHeader(REQUEST_ID, reqId);
+			}
 			log.info("Completed Request {}: {}",req.getMethod(),req.getServletPath());
 			MDC.remove(REQUEST_ID);
 		}
