@@ -34,11 +34,15 @@ public class ReportSenderResource {
 	
 	@RequestMapping(value="/getReport", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> what() throws IOException{
-	    File file = new File("src/main/resources/ADM_Techniques.xls");
-	    return ResponseEntity.ok()
+		log.info("inside getReport");
+	    File file = new File("src/main/resources/ADM_Techniques.xlsx");
+	    ResponseEntity<byte[]> respEntity = ResponseEntity.ok()
 	            .header("Content-Disposition", "attachment; filename=" +file.getName())
+	            .header("FileName", file.getName())
 	            .contentType(MediaType.valueOf(FileTypeMap.getDefaultFileTypeMap().getContentType(file)))
 	            .body(Files.readAllBytes(file.toPath()));
+	    log.info("completed report "+respEntity.getStatusCode());
+	    return respEntity;
 	}
 
 
