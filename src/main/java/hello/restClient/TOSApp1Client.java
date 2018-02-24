@@ -43,6 +43,7 @@ public class TOSApp1Client {
 				FileOutputStream output = new FileOutputStream(new File("logs/"+fileName));
                 IOUtils.write(respEntity.getBody(), output);
                 log.info("Obtained File"+fileName);
+                output.close();
         }
 		
 	}

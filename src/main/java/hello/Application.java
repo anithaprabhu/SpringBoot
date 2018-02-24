@@ -31,6 +31,7 @@ public class Application {
     	ArrayList defaultConverters = new ArrayList();
     	defaultConverters.add(new MappingJackson2HttpMessageConverter());
     	defaultConverters.add(new ByteArrayHttpMessageConverter());
+    	defaultConverters.add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
     	restTemplate.setMessageConverters(defaultConverters);
     	return restTemplate;
     	
